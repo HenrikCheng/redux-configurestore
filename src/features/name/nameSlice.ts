@@ -1,24 +1,31 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState, AppThunk } from "../../app/store";
+import { RootState } from "../../app/store";
 
 export interface NameState {
-  name: string;
+  value: string;
 }
 
 const initialState: NameState = {
-  name: "joe biden",
+  value: "joe biden",
 };
-
-export const selectName = (state: RootState) => state.name.name;
 
 export const nameSlice = createSlice({
   name: "name",
   initialState,
   reducers: {
     updateName: (state, action: PayloadAction<string>) => {
-      state.name = action.payload;
+      state.value = action.payload;
+    },
+    emptyName: (state) => {
+      state.value = "";
     },
   },
 });
+
+export const { updateName, emptyName } = nameSlice.actions;
+
+export const selectName = (state: RootState) => {
+  return state.name.value;
+};
 
 export default nameSlice.reducer;
