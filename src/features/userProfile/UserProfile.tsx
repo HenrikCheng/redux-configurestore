@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from "react";
 
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { selectName, updateName, emptyName } from "./nameSlice";
+import {
+  selectUser,
+  updateName,
+  emptyName,
+  updateYears,
+} from "./userProfileSlice";
 
-export default function Name() {
-  const name = useAppSelector(selectName);
+export default function UserProfile() {
+  const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
-  const [inputValue, setInputValue] = useState(name);
+  const [inputValue, setInputValue] = useState(user.name);
+  const [inputYears, setInputYears] = useState(user.yearsOfService);
 
   useEffect(() => {
-    setInputValue(name);
-  }, [name]);
+    setInputValue(user.name);
+  }, [user.name]);
 
   return (
     <div>
@@ -26,6 +32,10 @@ export default function Name() {
         <button type="button" onClick={() => dispatch(emptyName())}>
           Empty
         </button>
+        <input
+          type="number"
+          onChange={(e) => dispatch(updateYears(e.target.valueAsNumber))}
+        />
       </form>
     </div>
   );
